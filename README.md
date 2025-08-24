@@ -26,10 +26,9 @@ Disclaimer: Everything is subject to change.
 
 ## Keywords
 
-- let
+- variable
 - function
 - if
-- elseif
 - else
 - for
 - while
@@ -112,6 +111,20 @@ or
  *     /     //    %
  unary operators (not   #     -     ~)
  ^
+```
+
+## Examples
+
+```oro
+var x = 5;
+var y = 3;
+
+fn add(a, b) {
+    return a + b;
+}
+
+var result = add(x, y);
+print(result);
 ```
 
 ## References
