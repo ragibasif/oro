@@ -1,11 +1,24 @@
-// Package token
+// Package token defines the tokens that the source code will be converted to
 package token
+
+import "fmt"
 
 type TokenType int
 
 type Token struct {
 	Type    TokenType
 	Literal string
+}
+
+func (t Token) String() string {
+	return fmt.Sprintf("%d %s", t.Type, t.Literal)
+}
+
+func NewToken(tt TokenType, l byte) Token {
+	t := new(Token)
+	t.Type = tt
+	t.Literal = string(l)
+	return *t
 }
 
 const (
@@ -33,8 +46,8 @@ const (
 	Bool // true, false
 
 	// Arithmetic Operators
-	Add      // +
-	Subtract // -
+	Plus     // +
+	Minus    // -
 	Multiply // *
 	Divide   // /
 	Modulo   // %

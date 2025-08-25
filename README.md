@@ -23,6 +23,7 @@ Disclaimer: Everything is subject to change.
 - TODO: How to handle type conversions and coercions
 - TODO: How to handle errors
 - TODO: standard library
+- TODO: look into regex
 
 ## Keywords
 
@@ -129,4 +130,8 @@ print(result);
 
 ## References
 
--[Lua 5.4 Reference Manual](https://www.lua.org/manual/5.4/)
+- [Learning Go](https://www.oreilly.com/library/view/learning-go-2nd/9781098139285/)
+- [Lua 5.4 Reference Manual](https://www.lua.org/manual/5.4/)
+- [Crafting Interpreters](https://craftinginterpreters.com/index.html)
+- [Learn Go with Tests](https://quii.gitbook.io/learn-go-with-tests)
+- [Writing An Interpreter in Go](https://interpreterbook.com/)
