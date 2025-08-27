@@ -127,11 +127,3 @@ fn add(a, b) {
 var result = add(x, y);
 print(result);
 ```
-
-## References
-
-- [Learning Go](https://www.oreilly.com/library/view/learning-go-2nd/9781098139285/)
-- [Lua 5.4 Reference Manual](https://www.lua.org/manual/5.4/)
-- [Crafting Interpreters](https://craftinginterpreters.com/index.html)
-- [Learn Go with Tests](https://quii.gitbook.io/learn-go-with-tests)
-- [Writing An Interpreter in Go](https://interpreterbook.com/)
