@@ -1,6 +1,6 @@
 # oro
 
-Oro is a scripting language that takes inspiration from Lua, Python,Go, and C.
+Oro is a programming language that takes inspiration from Lua, Python,Go, and C.
 
 Disclaimer: **For educational and recreational purposes only.**
 

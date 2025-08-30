@@ -1,26 +1,70 @@
 package lexer
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/ragibasif/oro/token"
 )
 
 func TestLexer(t *testing.T) {
-	source := `=+(){},;`
+	source := `var five = 5;
+var three = 3;
+
+fn add(a, b) {
+    return a + b;
+}
+
+var result = add(five, three);
+print(result);
+`
 
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
+		{token.Variable, "var"},
+		{token.Identifier, "five"},
 		{token.Assignment, "="},
-		{token.Plus, "+"},
+		{token.Number, "5"},
+		{token.Semicolon, ";"},
+
+		{token.Variable, "var"},
+		{token.Identifier, "three"},
+		{token.Assignment, "="},
+		{token.Number, "3"},
+		{token.Semicolon, ";"},
+
+		{token.Function, "fn"},
+		{token.Identifier, "add"},
 		{token.LeftParentheses, "("},
+		{token.Identifier, "a"},
+		{token.Identifier, "b"},
 		{token.RightParentheses, ")"},
 		{token.LeftCurlyBrace, "{"},
-		{token.RightCurlyBrace, "}"},
-		{token.Comma, ","},
+		{token.Return, "return"},
+		{token.Identifier, "a"},
+		{token.Plus, "+"},
+		{token.Identifier, "b"},
 		{token.Semicolon, ";"},
+		{token.RightCurlyBrace, "}"},
+
+		{token.Variable, "var"},
+		{token.Identifier, "result"},
+		{token.Assignment, "="},
+		{token.Identifier, "add"},
+		{token.LeftParentheses, "("},
+		{token.Identifier, "five"},
+		{token.Identifier, "three"},
+		{token.RightParentheses, ")"},
+		{token.Semicolon, ";"},
+
+		{token.Print, "print"},
+		{token.LeftParentheses, "("},
+		{token.Identifier, "result"},
+		{token.RightParentheses, ")"},
+		{token.Semicolon, ";"},
+
 		{token.EOF, ""},
 	}
 
@@ -39,6 +83,7 @@ func TestLexer(t *testing.T) {
 			tok := l.ScanToken()
 
 			if tok.Type != tests[i].expectedType {
+				fmt.Println(tok.String(), tests[i].expectedType, tests[i].expectedLiteral)
 				t.Fatalf("tests[%d] - TokenType wrong, expected=%q, got=%q", i, tests[i].expectedType, tok.Type)
 			}
 

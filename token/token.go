@@ -121,17 +121,24 @@ const (
 )
 
 var keywords = map[string]TokenType{
-	"fn":     Function,
-	"var":    Variable,
-	"true":   True,
-	"false":  False,
-	"if":     If,
-	"else":   Else,
-	"return": Return,
+	"var":      Variable,
+	"fn":       Function,
+	"return":   Return,
+	"print":    Print,
+	"if":       If,
+	"else":     Else,
+	"for":      For,
+	"while":    While,
+	"true":     True,
+	"false":    False,
+	"null":     Null,
+	"break":    Break,
+	"continue": Continue,
 }
 
 func LookupIdentifier(identifier string) TokenType {
-	if token, ok := keywords[identifier]; ok {
+	token, err := keywords[identifier]
+	if !err {
 		return token
 	}
 	return Identifier
