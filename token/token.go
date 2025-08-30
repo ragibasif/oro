@@ -51,7 +51,6 @@ const (
 	Multiply // *
 	Divide   // /
 	Modulo   // %
-	Negate   // -
 
 	// Bitwise Operators
 	BitwiseAnd        // &
@@ -93,8 +92,8 @@ const (
 	Semicolon          // ;
 	Dot                // .
 	Comma              // ,
-	LeftParentheses    // (
-	RightParentheses   // )
+	LeftParenthesis    // (
+	RightParenthesis   // )
 	LeftCurlyBrace     // {
 	RightCurlyBrace    // }
 	LeftSquareBracket  // [
@@ -137,8 +136,8 @@ var keywords = map[string]TokenType{
 }
 
 func LookupIdentifier(identifier string) TokenType {
-	token, err := keywords[identifier]
-	if !err {
+	token, ok := keywords[identifier]
+	if ok {
 		return token
 	}
 	return Identifier

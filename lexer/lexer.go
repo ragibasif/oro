@@ -21,18 +21,45 @@ func (l *Lexer) ScanToken() token.Token {
 
 	var c byte
 
-	if isWhitespace(l.peek()) {
-		l.skipWhitespace()
-		c = l.peek()
-	} else {
-		c = l.step()
-	}
+	l.skipWhitespace()
+	c = l.peek()
 
 	var tok token.Token
 
+	// Keywords
+	// Variable // var
+	// Function // fn
+	// Return   // return
+	// Print    // print
+	// If       // if
+	// Else     // else
+	// For      // for
+	// While    // while
+	// True     // true
+	// False    // false
+	// Null     // null
+	// Break    // break
+	// Continue // continue
+
+	// Literals
+	// String
+	// Bool // true, false
+
+	// // Escape Sequences
+	// EscapeBell           // \a
+	// EscapeBackSpace      // \b
+	// EscapeFormFeed       // \f
+	// EscapeNewLine        // \n
+	// EscapeCarriageReturn // \r
+	// EscapeHorizontalTab  // \t
+	// EscapeVerticalTab    // \v
+	// EscapeBackSlash      // \\
+	// EscapeQuote          // \"
+	// EscapeApostrophe     // \'
+
 	switch c {
-	case '=':
-		tok = token.NewToken(token.Assignment, c)
+
+	// Arithmetic Operators
 	case '+':
 		tok = token.NewToken(token.Plus, c)
 	case '-':
@@ -41,18 +68,82 @@ func (l *Lexer) ScanToken() token.Token {
 		tok = token.NewToken(token.Multiply, c)
 	case '/':
 		tok = token.NewToken(token.Divide, c)
+	case '%':
+		tok = token.NewToken(token.Modulo, c)
+
+	// Assignment Operators
+	// PlusAssignment              // +=
+	// MinusAssignment             // -=
+	// MultiplyAssignment          // *=
+	// DivideAssignment            // /=
+	// ModuloAssignment            // %=
+	// BitwiseAndAssignment        // &=
+	// BitwiseOrAssignment         // |=
+	// BitwiseXorAssignment        // ^=
+	// BitwiseLeftShiftAssignment  // <<=
+	// BitwiseRightShiftAssignment // >>=
+	case '=':
+		tok = token.NewToken(token.Assignment, c)
+
+	// Delimiters
 	case '(':
-		tok = token.NewToken(token.LeftParentheses, c)
+		tok = token.NewToken(token.LeftParenthesis, c)
 	case ')':
-		tok = token.NewToken(token.RightParentheses, c)
+		tok = token.NewToken(token.RightParenthesis, c)
 	case '{':
 		tok = token.NewToken(token.LeftCurlyBrace, c)
 	case '}':
 		tok = token.NewToken(token.RightCurlyBrace, c)
+	case '[':
+		tok = token.NewToken(token.LeftSquareBracket, c)
+	case ']':
+		tok = token.NewToken(token.RightSquareBracket, c)
 	case ',':
 		tok = token.NewToken(token.Comma, c)
 	case ';':
 		tok = token.NewToken(token.Semicolon, c)
+	case ':':
+		tok = token.NewToken(token.Colon, c)
+	case '?':
+		tok = token.NewToken(token.Question, c)
+	case '.':
+		tok = token.NewToken(token.Dot, c)
+
+	// Logical Operators
+	// LogicalAnd // &&
+	// LogicalOr  // ||
+	case '!':
+		tok = token.NewToken(token.LogicalNot, c)
+
+	// Relational Operators
+	// Eqality      // ==
+	// InEquality   // !=
+	// LessEqual    // <=
+	// GreaterEqual // >=
+	case '<':
+		tok = token.NewToken(token.LessThan, c)
+	case '>':
+		tok = token.NewToken(token.GreaterThan, c)
+
+	// Bitwise Operators
+	// BitwiseRightShift // >>
+	// BitwiseLeftShift  // <<
+	case '&':
+		tok = token.NewToken(token.BitwiseAnd, c)
+	case '|':
+		tok = token.NewToken(token.BitwiseOr, c)
+	case '~':
+		tok = token.NewToken(token.BitwiseNot, c)
+	case '^':
+		tok = token.NewToken(token.BitwiseXor, c)
+
+	// Others
+	case '#':
+		tok = token.NewToken(token.Comment, c)
+	case 0:
+		tok.Literal = ""
+		tok.Type = token.EOF
+
 	default:
 		if isAlpha(c) {
 			tok.Literal = l.identifier()
@@ -67,6 +158,7 @@ func (l *Lexer) ScanToken() token.Token {
 		}
 	}
 
+	l.step()
 	return tok
 }
 
@@ -99,7 +191,6 @@ func (l *Lexer) identifier() string {
 	for isAlpha(l.peek()) {
 		l.step()
 	}
-	fmt.Println("heer", l.source[position:l.position], position, l.position)
 	return l.source[position:l.position]
 }
 
@@ -137,6 +228,9 @@ func (l *Lexer) peek() byte {
 }
 
 func (l *Lexer) step() byte {
+	if !l.withinBounds() {
+		return 0
+	}
 	l.position++
 	return l.source[l.position-1]
 }
